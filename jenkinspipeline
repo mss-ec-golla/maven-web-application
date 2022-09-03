@@ -1,0 +1,23 @@
+node {
+    def mavenHome = tool name:"maven 3.8.6"
+    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), pipelineTriggers([pollSCM('* * * * *')])])
+    stage ('checkoutcode'){
+        git branch: 'devlopment', credentialsId: '8a36603e-02ca-4cae-af81-37664c799cd9', url: 'https://github.com/mss-ec-golla/maven-web-application.git'
+    }
+    stage ('Build'){
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+    stage ('execute sonarQube Report'){
+         sh "${mavenHome}/bin/mvn clean sonar:sonar package"
+    }
+    stage ('UploadArtifactsInto ArtifactsRepo'){
+        sh "${mavenHome}/bin/mvn clean deploy"
+    }
+    stage ('DeployAppintoTomcatServer'){
+sshagent(['35a83599-2ee0-49af-ae2c-20b776a8622f']) {
+    sh "scp -o StrictHostkeyChecking=no target/maven-web-application.war ec2-user@172.31.4.89:/opt/apache-tomcat-9.0.65/webapps"
+    
+}
+    }
+    
+}
