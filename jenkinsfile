@@ -23,8 +23,8 @@ sshagent(['35a83599-2ee0-49af-ae2c-20b776a8622f']) {
     }
     }
     catch (e){
-    throw e
     slacknotifications(currentBuild.result)
+    throw e
     }
     finally{
     slacknotifications(currentBuild.result)
