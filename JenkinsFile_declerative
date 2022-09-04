@@ -31,7 +31,7 @@ pipeline{
         }
         stage('uploadartifactsintoartifactsrepo'){
             steps{
-                sh "mvn clean deploy"
+                sh "mvn clean deploy2"
            }
         }
         stage('DeployintoTomcatServer'){
