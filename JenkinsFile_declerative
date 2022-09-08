@@ -13,7 +13,6 @@ pipeline {
         maven 'maven 3.8.6'
     }
     properties([parameters([choice(choices: ['master', 'devlopment'], description: 'enter branch name', name: 'Branchname'), string(defaultValue: 'Golla Chandra Sekhar', description: 'echo "the name value is:" ${Name}', name: 'Name')])])
-    
     stages{
         stage('checkoutcode'){
             steps{
@@ -44,6 +43,7 @@ pipeline {
             }
        } 
     }
+    }
     post {
   success {
    sendSlackNotifications(currentBuild.result)
@@ -51,7 +51,6 @@ pipeline {
   failure {
     sendSlackNotifications(currentBuild.result)
   }
-}
 }
 }
 
