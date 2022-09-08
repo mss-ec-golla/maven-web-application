@@ -52,5 +52,3 @@ pipeline{
     sendSlackNotifications(currentBuild.result)
   }
 }
-}
-
