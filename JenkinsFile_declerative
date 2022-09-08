@@ -1,6 +1,6 @@
 
-@Library ('sharedlib')
-pipeline {
+@library ('sharedlib')
+pipeline{
     agent any
     options{
         timestamps()
